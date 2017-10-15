@@ -13,33 +13,6 @@ document_embedings = pickle.load(document_file)
 labels = pickle.load(label_file)
 test_size = 0.1
 
-# count = 0
-# temp_labels = []
-# labels_in_parts = []
-# documents_in_parts = []
-# temp_doc_embedding = []
-# number_of_document_parts = (doc_id + 1) / document_parts
-#
-# for i in range(doc_id + 1) :
-#     doc = document_embedings[i]
-#     label = labels[i]
-#     if count < number_of_document_parts :
-#         temp_doc_embedding.append(doc)
-#         temp_labels.append(label)
-#         count += 1
-#     else :
-#         documents_in_parts.append(temp_doc_embedding)
-#         labels_in_parts.append(temp_labels)
-#         temp_doc_embedding = []
-#         temp_labels = []
-#         count = 0
-
-# X_train, X_test, y_train, y_test = train_test_split(document_embedings, labels, test_size = test_size, random_state = 0)
-# clf = svm.SVC()
-# clf.fit(X_train, y_train)
-# score = clf.score(X_test, y_test)
-# print score
-
 document_embedings = np.array(document_embedings)
 labels = np.array(labels)
 model = Sequential()

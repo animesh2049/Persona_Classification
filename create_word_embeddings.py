@@ -2,7 +2,6 @@ from downsample import *
 import numpy as np
 import pickle
 import re
-from nltk.tokenize import word_tokenize
 
 GLOVE_DIR = "./"
 GLOVE_FILE_NAME = "glove.840B.300d.txt"
