@@ -1,38 +1,54 @@
-from downsample import *
+import pickle
 import numpy as np
+from sklearn import svm
+from sklearn.model_selection import train_test_split
+from keras.models import Sequential
+from keras.layers import Dense
 
-GLOVE_DIR = "./"
-GLOVE_FILE_NAME = "glove.840B.300d.txt"
-glove = open(GLOVE_DIR + GLOVE_FILE_NAME)
+document_file = open('document_embeddings', 'r')
+label_file = open('labels', 'r')
+vector_dimension = 300
 
-word_embedding = {}
-name_to_doc_id = {}
-doc_id = 0
+document_embedings = pickle.load(document_file)
+labels = pickle.load(label_file)
+test_size = 0.1
 
-document_embedings = []
-vector_dimension= 300
+# count = 0
+# temp_labels = []
+# labels_in_parts = []
+# documents_in_parts = []
+# temp_doc_embedding = []
+# number_of_document_parts = (doc_id + 1) / document_parts
+#
+# for i in range(doc_id + 1) :
+#     doc = document_embedings[i]
+#     label = labels[i]
+#     if count < number_of_document_parts :
+#         temp_doc_embedding.append(doc)
+#         temp_labels.append(label)
+#         count += 1
+#     else :
+#         documents_in_parts.append(temp_doc_embedding)
+#         labels_in_parts.append(temp_labels)
+#         temp_doc_embedding = []
+#         temp_labels = []
+#         count = 0
 
-for line in glove:
-    values = line.split()
-    word = values[0]
-    coefs = np.asarray(values[1:], dtype='float32')
-    word_embedding[word] = coefs
+# X_train, X_test, y_train, y_test = train_test_split(document_embedings, labels, test_size = test_size, random_state = 0)
+# clf = svm.SVC()
+# clf.fit(X_train, y_train)
+# score = clf.score(X_test, y_test)
+# print score
 
-print "done loading embedding"
-for directory in data_label:
-    files = os.listdir(DATA_DIR+directory)
-    for f in files:
-        name_to_doc_id[f] = doc_id
-        doc_id += 1
-        file_descriptor = open(DATA_DIR+directory+"/"+f)
-        temp_doc_embedding = np.zeros(vector_dimension)
-        temp_word_counter = 0
-        for word in file_descriptor:
-            if word not in word_embedding:
-                continue
-            else:
-                temp_doc_embedding += word_embedding[word]
-                temp_word_counter += 1
-
-        final_doc_embedding  = temp_doc_embedding/temp_word_counter
-        document_embedings.append(final_doc_embedding)
+document_embedings = np.array(document_embedings)
+labels = np.array(labels)
+model = Sequential()
+model.add(Dense(100, input_dim=vector_dimension, activation='relu'))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.fit(document_embedings, labels, epochs=100, batch_size=10, validation_split=test_size)
+scores = model.evaluate(document_embedings, labels)
+print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))

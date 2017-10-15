@@ -3,7 +3,6 @@ import os
 DATA_DIR = "blogs/mod/"
 
 directories = os.listdir(DATA_DIR) # Consultant, Patient etc.
-
 temp_map = {}
 files_to_ignore = {}
 label_to_id = {}
@@ -27,5 +26,3 @@ for directory in directories:
     for f in files:
         if f not in files_to_ignore:
             data_label[directory].append(f)
-
-# print data_label
