@@ -5,8 +5,8 @@ from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense
 
-EMBEDDING_FILE_NAME = "document_embeddings" # For other cases this can also be taken as input
-LABEL_FILE_NAME = "labels"
+EMBEDDING_FILE_NAME = "document_embeddings.pickle"  # For other cases this can also be taken as input
+LABEL_FILE_NAME = "labels.pickle"
 
 embeddng_file = open(EMBEDDING_FILE_NAME, 'r')
 label_file = open(LABEL_FILE_NAME, 'r')
@@ -17,11 +17,21 @@ test_size = 0.1
 document_embedings = np.array(document_embedings)
 labels = np.array(labels)
 
-X_train, X_test, y_train, y_test = train_test_split(document_embedings, labels, test_size = test_size, random_state = 0)
-clf = svm.SVC()
-clf.fit(X_train, y_train)
-score = clf.score(X_test, y_test)
-print score
+
+def svm_function(testing_size):
+
+    '''
+    :param testing_size: Percentage of data to be used for testing.
+    :return: Accuracy of the model
+    '''
+
+    X_train, X_test, y_train, y_test = train_test_split(document_embedings, labels,
+                                                        test_size=testing_size, random_state=0)
+    clf = svm.SVC()
+    clf.fit(X_train, y_train)
+    score = clf.score(X_test, y_test)
+    print score
+
 
 def neural_networks(num_of_layers, nodes_per_layer, num_epochs,
                     activation_function, optimizer_function, loss_function):
@@ -71,3 +81,12 @@ if __name__ == "__main__":
             print "Parameters not specified correctly :("
             exit(-1)
         neural_networks(layers, nodes, epochs, act_func, opt_func, loss_func)
+    elif choice == 2:
+        print svm_function.__doc__
+        print "Please specify the function parameters"
+        testing_input_size = input("Testing input size: ")
+
+        if not isinstance(testing_input_size, float) or testing_input_size > 1 or testing_input_size < 0:
+            print "Parameters not specified correctly :("
+            exit(-1)
+        svm_function(testing_input_size)
