@@ -25,7 +25,6 @@ labels = labels[:599]
 test_size = 0.1
 document_embeddings = np.array(document_embeddings)
 labels = np.array(labels)
-print labels
 
 def svm_function(testing_size):
 
@@ -60,9 +59,6 @@ def neural_networks(num_of_layers, nodes_per_layer, num_epochs,
         optimizer_function = 'adam'
     if loss_function == '':
         loss_function = 'binary_crossentropy'
-
-    # print num_of_layers, nodes_per_layer, num_epochs, \
-    #         activation_function, optimizer_function, loss_function
 
     model = Sequential()
     model.add(Dense(nodes_per_layer, input_dim=vector_dimension, activation='relu'))
