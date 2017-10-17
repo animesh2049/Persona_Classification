@@ -3,10 +3,10 @@ import os
 DATA_DIR = "blogs/mod/"
 directories = os.listdir(DATA_DIR) # Consultant, Patient etc.
 temp_map = {}
-data_label = {}
+directory_to_file_map = {}
 files_to_ignore = {}
-label_to_id = {}
-temp_id_counter = 0
+label_to_id_map = {}
+directory_id = 0
 
 for directory in directories:
     files = os.listdir(DATA_DIR+directory)  # Files in inside consultant folder
@@ -17,10 +17,10 @@ for directory in directories:
             temp_map[f] = 1
 
 for directory in directories:
-    label_to_id[directory] = temp_id_counter
-    temp_id_counter += 1
-    data_label[directory] = []
+    label_to_id_map[directory] = directory_id
+    directory_id += 1
+    directory_to_file_map[directory] = []
     files = os.listdir(DATA_DIR+directory)
     for f in files:
         if f not in files_to_ignore:
-            data_label[directory].append(f)
+            directory_to_file_map[directory].append(f)
