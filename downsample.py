@@ -7,6 +7,7 @@ directory_to_file_map = {}
 files_to_ignore = {}
 label_to_id_map = {}
 directory_id = 0
+file_counter = 0
 
 for directory in directories:
     files = os.listdir(DATA_DIR+directory)  # Files in inside consultant folder
@@ -24,3 +25,4 @@ for directory in directories:
     for f in files:
         if f not in files_to_ignore:
             directory_to_file_map[directory].append(f)
+            file_counter += 1
