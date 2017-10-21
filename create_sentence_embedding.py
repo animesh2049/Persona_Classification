@@ -9,8 +9,8 @@ model = skipthoughts.load_model()
 encoder = skipthoughts.Encoder(model)
 document_embeddings = open('document_embeddings_from_skipthoughts', 'w')
 
-for directory in data_label:
-    files = data_label[directory]
+for directory in directory_to_file_map:
+    files = directory_to_file_map[directory]
     for f in files:
         print DATA_DIR+directory+"/"+f
         with open(DATA_DIR+directory+"/"+f) as file_descriptor:
