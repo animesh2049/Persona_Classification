@@ -28,8 +28,8 @@ for directory in directories:
     for f in files:
         if f not in files_to_ignore:
             directory_to_file_map[directory].append(f)
-            labels.append(directory_id)
+            labels.append(directory_id-1)
             file_counter += 1
 
-labels = to_categorical(np.asarray(labels))
-np.save("labels", labels)
+categorial_labels = to_categorical(np.asarray(labels))
+np.save("labels", categorial_labels)
