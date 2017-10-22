@@ -1,30 +1,18 @@
-import csv
-import pickle
+import pdb
 import numpy as np
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense
 
-EMBEDDING_FILE_NAME = "document_embeddings.pickle"  # For other cases this can also be taken as input
-SENTENCE_EMBEDDING_FILE_NAME = "document_embeddings_from_skipthoughts.csv"
-LABEL_FILE_NAME = "labels.pickle"
-
-embeddng_file = open(EMBEDDING_FILE_NAME, 'r')
-label_file = open(LABEL_FILE_NAME, 'r')
-vector_dimension = 4800
-# document_embeddings = pickle.load(embeddng_file)
-document_embeddings = []
-with open(SENTENCE_EMBEDDING_FILE_NAME, 'r') as file:
-    reader = csv.reader(file)
-    for row in reader:
-        document_embeddings.append(row)
-
-labels = pickle.load(label_file)
-labels = labels[:599]
+WORD_EMBEDDING_FILE_NAME = "word_embeddings.npy"  # For other cases this can also be taken as input
+SENTENCE_EMBEDDING_FILE_NAME = "sentence_embeddings_from_skip_thoughts.npy"
+LABEL_FILE_NAME = "labels.npy"
+vector_dimension = (1, 2400)
+labels = np.load(LABEL_FILE_NAME)
+sentence_embeddings = np.load(SENTENCE_EMBEDDING_FILE_NAME)
+word_embeddings = np.load(WORD_EMBEDDING_FILE_NAME)
 test_size = 0.1
-document_embeddings = np.array(document_embeddings)
-labels = np.array(labels)
 
 def svm_function(testing_size):
 
@@ -33,7 +21,7 @@ def svm_function(testing_size):
     :return: Accuracy of the model
     '''
 
-    X_train, X_test, y_train, y_test = train_test_split(document_embeddings, labels,
+    X_train, X_test, y_train, y_test = train_test_split(sentence_embeddings, labels,
                                                         test_size=testing_size, random_state=0)
     clf = svm.SVC()
     clf.fit(X_train, y_train)
@@ -58,16 +46,17 @@ def neural_networks(num_of_layers, nodes_per_layer, num_epochs,
     if optimizer_function == '':
         optimizer_function = 'adam'
     if loss_function == '':
-        loss_function = 'binary_crossentropy'
+        loss_function = 'categorical_crossentropy'
 
+    pdb.set_trace()
     model = Sequential()
     model.add(Dense(nodes_per_layer, input_dim=vector_dimension, activation='relu'))
     for _ in xrange(num_of_layers):
         model.add(Dense(nodes_per_layer, activation=activation_function))
-    model.add(Dense(1, activation='sigmoid'))
+    model.add(Dense(len(labels[0]), activation='sigmoid'))
     model.compile(loss=loss_function, optimizer=optimizer_function, metrics=['accuracy'])
-    model.fit(document_embeddings, labels, epochs=num_epochs, batch_size=10, validation_split=test_size)
-    scores = model.evaluate(document_embeddings, labels)
+    model.fit(sentence_embeddings, labels, epochs=num_epochs, batch_size=10, validation_split=test_size)
+    scores = model.evaluate(sentence_embeddings, labels)
     print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
 if __name__ == "__main__":

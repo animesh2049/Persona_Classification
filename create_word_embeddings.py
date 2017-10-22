@@ -4,12 +4,10 @@ import numpy as np
 from downsample import *
 
 doc_id = 0
-labels = []
 GLOVE_DIR = "./"
 word_embedding = {}
 vector_dimension = 300
 name_to_doc_id_map = {}
-labels = np.zeros([file_counter, 7])
 GLOVE_FILE_NAME = "glove.840B.300d.txt"
 document_embeddings = np.empty([file_counter, vector_dimension])
 
@@ -39,8 +37,6 @@ for directory in directory_to_file_map:
                 final_doc_embedding = final_doc_embedding / temp_word_counter
 
             document_embeddings[doc_id] = final_doc_embedding
-            labels[doc_id][label_to_id_map[directory]] = 1
         doc_id += 1
 
 np.save("word_embeddings", document_embeddings)
-np.save("labels", labels)
