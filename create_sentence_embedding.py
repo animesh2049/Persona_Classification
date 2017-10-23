@@ -17,5 +17,4 @@ for directory in directory_to_file_map:
             file_content = sent_tokenize(file_descriptor.read())
             document_embedding = encoder.encode(file_content, verbose=False)
             document_embedding = np.average(document_embedding, axis=0)
-            document_embedding = document_embedding[::2]
-            np.save("test_embeddings/"+f[:-4], document_embedding)
+            np.save("sentence_embeddings/"+f[:-4], document_embedding)
