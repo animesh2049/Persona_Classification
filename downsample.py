@@ -2,7 +2,7 @@ import os
 import numpy as np
 from keras.utils import to_categorical
 
-DATA_DIR = "blogs/mod/"
+DATA_DIR = "blogs/orig/"
 directories = os.listdir(DATA_DIR) # Consultant, Patient etc.
 temp_map = {}
 directory_to_file_map = {}

@@ -7,20 +7,16 @@ import os
 import sys
 import downsample
 
+test_size = 0.1
+vector_dimension = None
+LABEL_FILE_NAME = "labels.npy"
+labels = np.load(LABEL_FILE_NAME)
+embeddings_matrix = None
+EMBEDDINGS_FOLDER = None
 WORD_EMBEDDING_FILE_NAME = "word_embeddings.npy"  # For other cases this can also be taken as input
 SENTENCE_EMBEDDING_FILE_NAME = "sentence_embeddings_from_skip_thoughts.npy"
-LABEL_FILE_NAME = "labels.npy"
-vector_dimension = (1, 2400)
-labels = np.load(LABEL_FILE_NAME)
-# word_embeddings = np.load(WORD_EMBEDDING_FILE_NAME)
-test_size = 0.1
-
-EMBEDDINGS_FOLDER = "sentence_embeddings/"
-files = os.listdir(EMBEDDINGS_FOLDER)
-embeddings_matrix = np.zeros((len(files), vector_dimension[1]))
-
-for iterator in xrange(0, len(files)):
-    embeddings_matrix[iterator] = np.load(EMBEDDINGS_FOLDER+files[iterator])
+EMBEDDINGS_FOLDER_TRAINED_ON_GOOGLE_NEWS_VECTORS = "sentence_embeddings/"
+EMBEDDINGS_FOLDER_TRAINED_ON_GLOVE_VECTORS = "sentence_embeddings2/"
 
 def svm_function(testing_size):
 
@@ -70,6 +66,30 @@ def neural_networks(num_of_layers, nodes_per_layer, num_epochs,
 
 if __name__ == "__main__":
     choice = input("Please choose the model to use:\n1. Neural Network\n2. SVM\nYour choice: ")
+    embedding = input("Please choose the embeddings to use:\n0. Glove word embeddings\
+    \n1. Skip Thoughts sentence embeddings\
+    \n2. Skip-thoughts sentence embeddings trained on dataset\
+    \n3. Skip-thoughts sentence embeddings trained on dataset with Glove word embeddings\nYour choice: ")
+
+    if embedding == 0:
+        embeddings_matrix = np.load(WORD_EMBEDDING_FILE_NAME)
+        vector_dimension = (1, 300)
+    elif embedding == 1:
+        embeddings_matrix = np.load(SENTENCE_EMBEDDING_FILE_NAME)
+        vector_dimension = (1, 4800)
+    else:
+        if embedding == 2:
+            EMBEDDINGS_FOLDER = EMBEDDINGS_FOLDER_TRAINED_ON_GOOGLE_NEWS_VECTORS
+        else:
+            EMBEDDINGS_FOLDER = EMBEDDINGS_FOLDER_TRAINED_ON_GLOVE_VECTORS
+
+        vector_dimension = (1, 4800)
+        files = os.listdir(EMBEDDINGS_FOLDER)
+        embeddings_matrix = np.zeros((len(files), vector_dimension[1]))
+
+        for iterator in xrange(0, len(files)):
+            embeddings_matrix[iterator] = np.load(EMBEDDINGS_FOLDER+files[iterator])
+
     if choice == 1:
         print neural_networks.__doc__
         print "Please specify the function parameters"
@@ -85,6 +105,7 @@ if __name__ == "__main__":
             print "Parameters not specified correctly :("
             sys.exit(-1)
         neural_networks(layers, nodes, epochs, act_func, opt_func, loss_func)
+
     elif choice == 2:
         print svm_function.__doc__
         print "Please specify the function parameters"
