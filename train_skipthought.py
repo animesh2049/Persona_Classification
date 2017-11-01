@@ -12,6 +12,14 @@ from nltk import sent_tokenize
 X = []
 file_counter = 0
 SENTENCE_EMBEDDING_FOLDER = "sentence_embeddings2/"
+path_to_word2vec = "/home/aayush/Persona_Classification/GoogleNews-vectors-negative300.bin"
+
+choice = input("Please choose the model to use:\n1. Train sentences on words trained on google news vectors\
+\n2. Train sentences on words on trained on glove vectors\nYour choice: ")
+
+if choice == 2:
+    SENTENCE_EMBEDDING_FOLDER = "sentence_embeddings3/"
+    path_to_word2vec = "/home/aayush/Persona_Classification/glove.840B.300d.w2vformat.txt"
 
 #Make List of all sentences from all documents
 for directory in directory_to_file_map:
@@ -36,7 +44,7 @@ train.trainer(X, dictionary=loc, saveto=saveto, maxlen_w=maxlen_w)
 
 #In tools.py set path_to_model=save_to in train, path_to_dictionary=dictionary in train and path_to_word2vec.
 count = 0
-embed_map = tools.load_googlenews_vectors()
+embed_map = tools.load_googlenews_vectors(path_to_word2vec)
 model = tools.load_model(embed_map)
 
 for directory in directory_to_file_map:

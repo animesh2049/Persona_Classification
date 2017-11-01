@@ -12,11 +12,10 @@ vector_dimension = None
 LABEL_FILE_NAME = "labels.npy"
 labels = np.load(LABEL_FILE_NAME)
 embeddings_matrix = None
-EMBEDDINGS_FOLDER = None
-WORD_EMBEDDING_FILE_NAME = "word_embeddings.npy"  # For other cases this can also be taken as input
-SENTENCE_EMBEDDING_FILE_NAME = "sentence_embeddings_from_skip_thoughts.npy"
-EMBEDDINGS_FOLDER_TRAINED_ON_GOOGLE_NEWS_VECTORS = "sentence_embeddings/"
-EMBEDDINGS_FOLDER_TRAINED_ON_GLOVE_VECTORS = "sentence_embeddings2/"
+WORD_EMBEDDING_FILE_NAME = "word_embeddings.npy"
+EMBEDDINGS_FOLDER = "sentence_embeddings/"
+EMBEDDINGS_FOLDER_TRAINED_ON_GOOGLE_NEWS_VECTORS = "sentence_embeddings2/"
+EMBEDDINGS_FOLDER_TRAINED_ON_GLOVE_VECTORS = "sentence_embeddings3/"
 
 def svm_function(testing_size):
 
@@ -74,13 +73,10 @@ if __name__ == "__main__":
     if embedding == 0:
         embeddings_matrix = np.load(WORD_EMBEDDING_FILE_NAME)
         vector_dimension = (1, 300)
-    elif embedding == 1:
-        embeddings_matrix = np.load(SENTENCE_EMBEDDING_FILE_NAME)
-        vector_dimension = (1, 4800)
     else:
         if embedding == 2:
             EMBEDDINGS_FOLDER = EMBEDDINGS_FOLDER_TRAINED_ON_GOOGLE_NEWS_VECTORS
-        else:
+        elif embedding == 3:
             EMBEDDINGS_FOLDER = EMBEDDINGS_FOLDER_TRAINED_ON_GLOVE_VECTORS
 
         vector_dimension = (1, 4800)
