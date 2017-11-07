@@ -21,7 +21,7 @@ choice = input("Please choose the model to use:\n1. Train sentences on words tra
 \n2. Train sentences on words on trained on glove vectors\nYour choice: ")
 
 if choice == 2:
-    SENTENCE_EMBEDDING_FOLDER = "sentence_embeddings3/"
+    SENTENCE_EMBEDDING_FOLDER = "document_sentence_embeddings3/"
     path_to_word2vec = base_path_to_directory + "glove.840B.300d.w2vformat.txt"
 
 #Make List of all sentences from all documents
@@ -41,7 +41,6 @@ for f in FILES:
             if sentence:
                 X.append(sentence.strip())
 
-X = X[:10]
 sentence_embeddings = np.empty([file_counter, 4800])
 loc = base_path_to_directory + "dictionary.pkl"
 saveto = base_path_to_directory + "toy.npz"

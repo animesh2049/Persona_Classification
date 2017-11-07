@@ -10,9 +10,9 @@ test_size = 0.1
 vector_dimension = None
 embeddings_matrix = None
 WORD_EMBEDDING_FILE_NAME = "document_word_embeddings.npy"
-EMBEDDINGS_FOLDER = "sentence_embeddings/"
-EMBEDDINGS_FOLDER_TRAINED_ON_GOOGLE_NEWS_VECTORS = "sentence_embeddings2/"
-EMBEDDINGS_FOLDER_TRAINED_ON_GLOVE_VECTORS = "sentence_embeddings3/"
+EMBEDDINGS_FOLDER = "document_sentence_embeddings/"
+EMBEDDINGS_FOLDER_TRAINED_ON_GOOGLE_NEWS_VECTORS = "document_sentence_embeddings2/"
+EMBEDDINGS_FOLDER_TRAINED_ON_GLOVE_VECTORS = "document_sentence_embeddings3/"
 
 def svm_function(testing_size):
 
