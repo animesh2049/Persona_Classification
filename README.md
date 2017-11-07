@@ -6,28 +6,28 @@ This code is written in python. To use it you will need:
 
 * Python 2.7
 * [skip-thoughts](https://github.com/ryankiros/skip-thoughts)
-* [glove-vectors-web-crawl-2.0GB](https://nlp.stanford.edu/projects/glove/)
-* [GoogleNews-vectors-negative300.bin](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit)
 
 ## Getting started
 
 You will first need to download the model files, word embeddings and blog posts data (see below). The embedding files (utable and btable) are quite large (>2GB) so make sure there is enough space available. The encoder vocabulary can be found in dictionary.txt.
 
-wget http://www.cs.toronto.edu/~rkiros/models/dictionary.txt  
-wget http://www.cs.toronto.edu/~rkiros/models/utable.npy  
-wget http://www.cs.toronto.edu/~rkiros/models/btable.npy  
-wget http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz  
-wget http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz.pkl  
-wget http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz  
-wget http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz.pkl  
+* wget http://www.cs.toronto.edu/~rkiros/models/dictionary.txt  
+* wget http://www.cs.toronto.edu/~rkiros/models/utable.npy  
+* wget http://www.cs.toronto.edu/~rkiros/models/btable.npy  
+* wget http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz  
+* wget http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz.pkl  
+* wget http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz  
+* wget http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz.pkl  
+* [glove-vectors-web-crawl-2.0GB](https://nlp.stanford.edu/projects/glove/)
+* [GoogleNews-vectors-negative300.bin](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit)
 
 ## Dataset
 
 * [blog-posts-dataset](https://drive.google.com/file/d/0B_9ISEpIrWxEVGw4aGttWTFGT0U/view)
 
 ## Instructions (before running the code)
-* The Google News Vectors file and Glove Vectors files need to be in the same repository as the code
-* All the files mentioned in the "Getting started" section also need to be in the same repository as the code
+* The Google News Vectors file and Glove Vectors files need to be in the same directory as the code
+* All the files mentioned in the "Getting started" section also need to be in the same directory as the code
 * Use the config file in the skip-thoughts-master directory and modify the base path of the Persona_Classification directory
 * Add the path of the skip-thoughts-master directory in your PYTHONPATH environment variable
 
