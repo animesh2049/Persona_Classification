@@ -7,6 +7,7 @@ This code is written in python. To use it you will need:
 * Python 2.7
 * [skip-thoughts](https://github.com/ryankiros/skip-thoughts)
 * [glove-vectors-web-crawl-2.0GB](https://nlp.stanford.edu/projects/glove/)
+* [GoogleNews-vectors-negative300.bin](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit)
 
 ## Getting started
 
@@ -23,3 +24,15 @@ wget http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz.pkl
 ## Dataset
 
 * [blog-posts-dataset](https://drive.google.com/file/d/0B_9ISEpIrWxEVGw4aGttWTFGT0U/view)
+
+## Instructions (before running the code)
+* The Google News Vectors file and Glove Vectors files need to be in the same repository as the code
+* All the files mentioned in the "Getting started" section also need to be in the same repository as the code
+* Use the config file in the skip-thoughts-master directory and modify the base path of the Persona_Classification directory
+* Add the path of the skip-thoughts-master directory in your PYTHONPATH environment variable
+
+## To run the code
+* python downsample.py -> creates documents label files
+* python create_word_embeddings.py -> creates document embeddings for our corpus using averaged word embeddings
+* python create_sentence_embeddings.py -> creates document embeddings for our corpus using averaged sentenced embeddings from pre-trained skip-thoughts module
+* python train_skipthought.py -> trains skipthoughts on the glove/google news vectors for our sentence corpus
