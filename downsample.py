@@ -1,8 +1,19 @@
 import os
+import pickle
 import numpy as np
 from keras.utils import to_categorical
 
-DATA_DIR = "blogs/orig/"
+dataset = input("Please choose the dataset to use:\n1. Completely accurate\
+\n2. Partially accurate\nYour choice: ")
+
+if dataset == 1:
+    DATASET_FOLDER = "orig/"
+    LABELS_FILE = "labels_accurate_data"
+else:
+    DATASET_FOLDER = "distant/"
+    LABELS_FILE = "labels_partially_accurate_data"
+
+DATA_DIR = "blogs/"+ DATASET_FOLDER
 directories = os.listdir(DATA_DIR) # Consultant, Patient etc.
 temp_map = {}
 directory_to_file_map = {}
@@ -32,4 +43,4 @@ for directory in directories:
             file_counter += 1
 
 categorial_labels = to_categorical(np.asarray(labels))
-np.save("labels", categorial_labels)
+np.save(LABELS_FILE, categorial_labels)

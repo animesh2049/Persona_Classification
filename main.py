@@ -5,14 +5,11 @@ from keras.models import Sequential
 from keras.layers import Dense
 import os
 import sys
-import downsample
 
 test_size = 0.1
 vector_dimension = None
-LABEL_FILE_NAME = "labels.npy"
-labels = np.load(LABEL_FILE_NAME)
 embeddings_matrix = None
-WORD_EMBEDDING_FILE_NAME = "word_embeddings.npy"
+WORD_EMBEDDING_FILE_NAME = "document_word_embeddings.npy"
 EMBEDDINGS_FOLDER = "sentence_embeddings/"
 EMBEDDINGS_FOLDER_TRAINED_ON_GOOGLE_NEWS_VECTORS = "sentence_embeddings2/"
 EMBEDDINGS_FOLDER_TRAINED_ON_GLOVE_VECTORS = "sentence_embeddings3/"
@@ -65,10 +62,18 @@ def neural_networks(num_of_layers, nodes_per_layer, num_epochs,
 
 if __name__ == "__main__":
     choice = input("Please choose the model to use:\n1. Neural Network\n2. SVM\nYour choice: ")
+    dataset = input("Please choose the dataset to use:\n1. Totally accurate data\
+    \n2. Partially accurate data\nYour choice: ")
     embedding = input("Please choose the embeddings to use:\n0. Glove word embeddings\
     \n1. Skip Thoughts sentence embeddings\
     \n2. Skip-thoughts sentence embeddings trained on dataset\
     \n3. Skip-thoughts sentence embeddings trained on dataset with Glove word embeddings\nYour choice: ")
+
+    if dataset == 1:
+        LABEL_FILE_NAME = "labels_accurate.npy"
+    else:
+        LABEL_FILE_NAME = "labels_partially_accurate.npy"
+    labels = np.load(LABEL_FILE_NAME)
 
     if embedding == 0:
         embeddings_matrix = np.load(WORD_EMBEDDING_FILE_NAME)
